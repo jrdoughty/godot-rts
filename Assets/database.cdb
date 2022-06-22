@@ -1,0 +1,1016 @@
+{
+	"sheets": [
+		{
+			"name": "units",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "name"
+				},
+				{
+					"typeStr": "1",
+					"name": "image",
+					"display": null
+				},
+				{
+					"typeStr": "3",
+					"name": "width"
+				},
+				{
+					"typeStr": "3",
+					"name": "height",
+					"display": null
+				},
+				{
+					"typeStr": "2",
+					"name": "mobile"
+				},
+				{
+					"typeStr": "2",
+					"name": "aggressive",
+					"opt": true,
+					"display": null
+				},
+				{
+					"typeStr": "3",
+					"name": "threatRange",
+					"opt": true
+				},
+				{
+					"typeStr": "8",
+					"name": "buildings",
+					"display": null
+				},
+				{
+					"typeStr": "8",
+					"name": "resources",
+					"display": null
+				},
+				{
+					"typeStr": "8",
+					"name": "attacks",
+					"opt": true
+				},
+				{
+					"typeStr": "3",
+					"name": "viewRange",
+					"opt": true
+				},
+				{
+					"typeStr": "3",
+					"name": "moveCoolDown",
+					"opt": true
+				},
+				{
+					"typeStr": "3",
+					"name": "idleCoolDown",
+					"display": null
+				},
+				{
+					"typeStr": "4",
+					"name": "health",
+					"display": 1
+				},
+				{
+					"typeStr": "3",
+					"name": "healthMax"
+				},
+				{
+					"typeStr": "6:ai",
+					"name": "ai",
+					"display": null
+				},
+				{
+					"typeStr": "8",
+					"name": "comps",
+					"opt": true
+				},
+				{
+					"typeStr": "8",
+					"name": "animations"
+				}
+			],
+			"lines": [
+				{
+					"name": "soldier",
+					"health": 1,
+					"threatRange": 3,
+					"aggressive": false,
+					"viewRange": 6,
+					"image": "swordSoldier",
+					"healthMax": 5,
+					"mobile": true,
+					"ai": "soldier",
+					"width": 8,
+					"height": 8,
+					"comps": [
+						{
+							"name": "DynamicAnimator"
+						},
+						{
+							"name": "Health"
+						},
+						{
+							"name": "StateAI"
+						},
+						{
+							"name": "View"
+						}
+					],
+					"idleCoolDown": 250,
+					"attacks": [
+						{
+							"name": "sword",
+							"damage": 1,
+							"minRange": 0,
+							"maxRange": 1,
+							"coolDown": 500
+						}
+					],
+					"resources": [],
+					"buildings": [],
+					"moveCoolDown": 500,
+					"animations": [
+						{
+							"name": "idle",
+							"frames": [
+								{
+									"id": 0
+								}
+							],
+							"fps": 5
+						},
+						{
+							"name": "attack",
+							"frames": [
+								{
+									"id": 0
+								},
+								{
+									"id": 2
+								}
+							],
+							"fps": 5
+						},
+						{
+							"name": "move",
+							"frames": [
+								{
+									"id": 0
+								},
+								{
+									"id": 1
+								}
+							],
+							"fps": 5
+						}
+					]
+				},
+				{
+					"name": "worker",
+					"image": "worker",
+					"width": 8,
+					"height": 8,
+					"mobile": true,
+					"buildings": [
+						{
+							"name": "barracks"
+						}
+					],
+					"resources": [
+						{
+							"name": "wood",
+							"harvest": 1,
+							"maxHarvest": 6,
+							"coolDown": 700
+						}
+					],
+					"idleCoolDown": 250,
+					"health": 1,
+					"healthMax": 4,
+					"ai": "worker",
+					"aggressive": false,
+					"threatRange": 3,
+					"viewRange": 8,
+					"moveCoolDown": 500,
+					"comps": [
+						{
+							"name": "DynamicAnimator"
+						},
+						{
+							"name": "StateAI"
+						},
+						{
+							"name": "Health"
+						},
+						{
+							"name": "View"
+						}
+					],
+					"attacks": [],
+					"animations": [
+						{
+							"name": "idle",
+							"frames": [
+								{
+									"id": 0
+								}
+							],
+							"fps": 5
+						},
+						{
+							"name": "gather",
+							"frames": [
+								{
+									"id": 0
+								},
+								{
+									"id": 2
+								}
+							],
+							"fps": 5
+						},
+						{
+							"name": "build",
+							"frames": [
+								{
+									"id": 0
+								},
+								{
+									"id": 2
+								}
+							],
+							"fps": 5
+						},
+						{
+							"name": "move",
+							"frames": [
+								{
+									"id": 0
+								},
+								{
+									"id": 1
+								}
+							],
+							"fps": 5
+						}
+					]
+				},
+				{
+					"name": "enemy",
+					"health": 1,
+					"image": "lizardspear",
+					"threatRange": 7,
+					"aggressive": false,
+					"viewRange": 8,
+					"healthMax": 5,
+					"mobile": true,
+					"ai": "wanderer",
+					"width": 8,
+					"height": 8,
+					"comps": [
+						{
+							"name": "DynamicAnimator"
+						},
+						{
+							"name": "Health"
+						},
+						{
+							"name": "StateAI"
+						},
+						{
+							"name": "View"
+						}
+					],
+					"idleCoolDown": 250,
+					"resources": [],
+					"buildings": [],
+					"moveCoolDown": 500,
+					"attacks": [
+						{
+							"name": "spear",
+							"damage": 2,
+							"maxRange": 1,
+							"minRange": 0,
+							"coolDown": 1000
+						}
+					],
+					"animations": [
+						{
+							"name": "idle",
+							"frames": [
+								{
+									"id": 0
+								}
+							],
+							"fps": 5
+						},
+						{
+							"name": "attack",
+							"frames": [
+								{
+									"id": 0
+								},
+								{
+									"id": 2
+								}
+							],
+							"fps": 5
+						},
+						{
+							"name": "move",
+							"frames": [
+								{
+									"id": 0
+								},
+								{
+									"id": 1
+								}
+							],
+							"fps": 5
+						}
+					]
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "buildings",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "name",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "image",
+					"display": null
+				},
+				{
+					"typeStr": "8",
+					"name": "attacks",
+					"display": null
+				},
+				{
+					"typeStr": "3",
+					"name": "viewRange",
+					"display": null
+				},
+				{
+					"typeStr": "3",
+					"name": "width",
+					"display": null
+				},
+				{
+					"typeStr": "3",
+					"name": "height",
+					"display": null
+				},
+				{
+					"typeStr": "8",
+					"name": "units",
+					"display": null
+				},
+				{
+					"typeStr": "3",
+					"name": "healthMax",
+					"display": null
+				},
+				{
+					"typeStr": "4",
+					"name": "health",
+					"display": 1
+				},
+				{
+					"typeStr": "3",
+					"name": "buildTime"
+				},
+				{
+					"typeStr": "2",
+					"name": "built",
+					"display": null
+				},
+				{
+					"typeStr": "3",
+					"name": "buildProgress",
+					"display": null
+				},
+				{
+					"typeStr": "8",
+					"name": "comps",
+					"display": null
+				},
+				{
+					"typeStr": "8",
+					"name": "resourcesAccepted",
+					"display": null
+				},
+				{
+					"typeStr": "3",
+					"name": "cost",
+					"display": null
+				},
+				{
+					"typeStr": "6:ai",
+					"name": "ai",
+					"display": null
+				}
+			],
+			"lines": [
+				{
+					"name": "barracks",
+					"units": [
+						{
+							"name": "soldier",
+							"cost": 50,
+							"produceTime": 1000
+						},
+						{
+							"name": "worker",
+							"cost": 25,
+							"produceTime": 750
+						}
+					],
+					"comps": [
+						{
+							"name": "View"
+						},
+						{
+							"name": "Health"
+						},
+						{
+							"name": "BuildingAnimator"
+						},
+						{
+							"name": "StateAI"
+						}
+					],
+					"image": "building",
+					"width": 16,
+					"height": 16,
+					"attacks": [],
+					"healthMax": 5,
+					"health": 1,
+					"resourcesAccepted": [
+						{
+							"name": "wood"
+						}
+					],
+					"cost": 100,
+					"ai": "productionBuilding",
+					"viewRange": 5,
+					"buildTime": 3,
+					"buildProgress": 0,
+					"built": false
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "ai",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "name"
+				},
+				{
+					"typeStr": "8",
+					"name": "states",
+					"display": null
+				}
+			],
+			"lines": [
+				{
+					"name": "soldier",
+					"states": [
+						{
+							"name": "main_idle"
+						},
+						{
+							"name": "attacking"
+						},
+						{
+							"name": "moving"
+						}
+					]
+				},
+				{
+					"name": "wanderer",
+					"states": [
+						{
+							"name": "attacking"
+						},
+						{
+							"name": "moving"
+						},
+						{
+							"name": "main_wander"
+						}
+					]
+				},
+				{
+					"name": "jackOfAll",
+					"states": [
+						{
+							"name": "attacking"
+						},
+						{
+							"name": "main_idle"
+						},
+						{
+							"name": "moving"
+						},
+						{
+							"name": "gathering"
+						},
+						{
+							"name": "go_to_resource"
+						},
+						{
+							"name": "returning"
+						},
+						{
+							"name": "go_to_building"
+						}
+					]
+				},
+				{
+					"name": "productionBuilding",
+					"states": [
+						{
+							"name": "main_building_idle"
+						},
+						{
+							"name": "producing"
+						},
+						{
+							"name": "being_built"
+						}
+					]
+				},
+				{
+					"name": "worker",
+					"states": [
+						{
+							"name": "gathering"
+						},
+						{
+							"name": "main_idle"
+						},
+						{
+							"name": "moving"
+						},
+						{
+							"name": "go_to_resource"
+						},
+						{
+							"name": "returning"
+						},
+						{
+							"name": "builder"
+						},
+						{
+							"name": "go_to_building"
+						}
+					]
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "ai@states",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "6:states",
+					"name": "name"
+				}
+			]
+		},
+		{
+			"name": "states",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "name"
+				}
+			],
+			"lines": [
+				{
+					"name": "attacking"
+				},
+				{
+					"name": "moving"
+				},
+				{
+					"name": "main_wander"
+				},
+				{
+					"name": "gathering"
+				},
+				{
+					"name": "returning"
+				},
+				{
+					"name": "main_building_idle"
+				},
+				{
+					"name": "main_idle"
+				},
+				{
+					"name": "being_built"
+				},
+				{
+					"name": "producing"
+				},
+				{
+					"name": "builder"
+				},
+				{
+					"name": "go_to_resource"
+				},
+				{
+					"name": "go_to_building"
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "levels",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "name",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "tmxFile",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "tsxFile",
+					"display": null
+				}
+			],
+			"lines": [
+				{
+					"name": "demo",
+					"tmxFile": "demolevel",
+					"tsxFile": "tinytileset"
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "units@comps",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "6:comps",
+					"name": "name"
+				}
+			]
+		},
+		{
+			"name": "comps",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "name",
+					"display": null
+				}
+			],
+			"lines": [
+				{
+					"name": "BasicAnimator"
+				},
+				{
+					"name": "BuildingAnimator"
+				},
+				{
+					"name": "Health"
+				},
+				{
+					"name": "ResourceHealth"
+				},
+				{
+					"name": "UIHealth"
+				},
+				{
+					"name": "View"
+				},
+				{
+					"name": "StateAI"
+				},
+				{
+					"name": "Building"
+				},
+				{
+					"name": "DynamicAnimator"
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "units@attacks",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "1",
+					"name": "name"
+				},
+				{
+					"typeStr": "3",
+					"name": "damage",
+					"display": null
+				},
+				{
+					"typeStr": "3",
+					"name": "maxRange"
+				},
+				{
+					"typeStr": "3",
+					"name": "minRange"
+				},
+				{
+					"typeStr": "3",
+					"name": "coolDown"
+				}
+			]
+		},
+		{
+			"name": "units@resources",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "6:resourceTypes",
+					"name": "name",
+					"display": null
+				},
+				{
+					"typeStr": "3",
+					"name": "harvest"
+				},
+				{
+					"typeStr": "3",
+					"name": "maxHarvest",
+					"display": null
+				},
+				{
+					"typeStr": "3",
+					"name": "coolDown",
+					"display": null
+				}
+			]
+		},
+		{
+			"name": "units@buildings",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "6:buildings",
+					"name": "name",
+					"display": null
+				}
+			]
+		},
+		{
+			"name": "buildings@units",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "6:units",
+					"name": "name",
+					"display": null
+				},
+				{
+					"typeStr": "3",
+					"name": "cost",
+					"display": null
+				},
+				{
+					"typeStr": "3",
+					"name": "produceTime"
+				}
+			]
+		},
+		{
+			"name": "buildings@comps",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "6:comps",
+					"name": "name",
+					"display": null
+				}
+			]
+		},
+		{
+			"name": "resourceTypes",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "name",
+					"display": null
+				}
+			],
+			"lines": [
+				{
+					"name": "wood"
+				},
+				{
+					"name": "gold"
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "buildings@attacks",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": []
+		},
+		{
+			"name": "resources",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "name",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "image",
+					"display": null
+				},
+				{
+					"typeStr": "3",
+					"name": "width",
+					"display": null
+				},
+				{
+					"typeStr": "3",
+					"name": "height",
+					"display": null
+				},
+				{
+					"typeStr": "6:resourceTypes",
+					"name": "resource",
+					"display": null
+				},
+				{
+					"typeStr": "3",
+					"name": "resourceValue",
+					"display": null
+				},
+				{
+					"typeStr": "4",
+					"name": "health",
+					"display": 1
+				},
+				{
+					"typeStr": "3",
+					"name": "healthMax",
+					"display": null
+				},
+				{
+					"typeStr": "8",
+					"name": "comps",
+					"display": null
+				}
+			],
+			"lines": [
+				{
+					"name": "tree",
+					"image": "tree",
+					"width": 8,
+					"height": 8,
+					"resource": "wood",
+					"resourceValue": 10,
+					"health": 1,
+					"healthMax": 12,
+					"comps": [
+						{
+							"name": "ResourceHealth"
+						}
+					]
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "resources@comps",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "6:comps",
+					"name": "name",
+					"display": null
+				}
+			]
+		},
+		{
+			"name": "buildings@resourcesAccepted",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "6:resourceTypes",
+					"name": "name",
+					"display": null
+				}
+			]
+		},
+		{
+			"name": "units@animations",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "1",
+					"name": "name",
+					"display": null
+				},
+				{
+					"typeStr": "8",
+					"name": "frames",
+					"display": null
+				},
+				{
+					"typeStr": "3",
+					"name": "fps",
+					"display": null
+				}
+			]
+		},
+		{
+			"name": "units@animations@frames",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "3",
+					"name": "id",
+					"display": null
+				}
+			]
+		}
+	],
+	"customTypes": [],
+	"compress": false
+}
