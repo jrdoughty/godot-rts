@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/worker.png" type="Texture" id=1]
+[ext_resource path="res://Assets/box.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Unit.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 4, 4 )
+
+[node name="Unit" type="KinematicBody2D"]
+input_pickable = true
+script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+hframes = 2
+vframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="box" type="NinePatchRect" parent="."]
+margin_left = -4.0
+margin_top = -4.0
+margin_right = 4.0
+margin_bottom = 4.0
+texture = ExtResource( 2 )
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+
+[node name="health" type="ProgressBar" parent="."]
+margin_left = -16.0
+margin_top = -18.0
+margin_right = 18.0
+margin_bottom = -4.0
+
+[node name="name" type="Label" parent="."]
+margin_left = -18.0
+margin_top = -32.0
+margin_right = 22.0
+margin_bottom = -18.0
+
+[connection signal="input_event" from="." to="." method="_on_Unit_input_event"]
