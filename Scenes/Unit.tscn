@@ -1,17 +1,33 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://Assets/worker.png" type="Texture" id=1]
+[ext_resource path="res://Assets/lizardclaw.png" type="Texture" id=1]
 [ext_resource path="res://Assets/box.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/Unit.gd" type="Script" id=3]
+[ext_resource path="res://Assets/UIOnMap.tres" type="Theme" id=4]
+[ext_resource path="res://Assets/fill.png" type="Texture" id=5]
+[ext_resource path="res://Assets/bg.png" type="Texture" id=6]
+[ext_resource path="res://Assets/neutral_unit_material.tres" type="Material" id=7]
+[ext_resource path="res://Assets/walk.tres" type="Animation" id=8]
+[ext_resource path="res://Assets/attack.tres" type="Animation" id=9]
+[ext_resource path="res://Assets/idle.tres" type="Animation" id=10]
+[ext_resource path="res://Scripts/State.gd" type="Script" id=11]
+[ext_resource path="res://Scripts/StateMachine.gd" type="Script" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4, 4 )
 
 [node name="Unit" type="KinematicBody2D"]
+material = ExtResource( 7 )
 input_pickable = true
 script = ExtResource( 3 )
 
+[node name="Shadow" type="Sprite" parent="."]
+position = Vector2( 0, 4 )
+scale = Vector2( 1, 0.25 )
+texture = ExtResource( 6 )
+
 [node name="Sprite" type="Sprite" parent="."]
+use_parent_material = true
 texture = ExtResource( 1 )
 hframes = 2
 vframes = 2
@@ -20,6 +36,7 @@ vframes = 2
 shape = SubResource( 1 )
 
 [node name="box" type="NinePatchRect" parent="."]
+visible = false
 margin_left = -4.0
 margin_top = -4.0
 margin_right = 4.0
@@ -30,16 +47,45 @@ patch_margin_top = 1
 patch_margin_right = 1
 patch_margin_bottom = 1
 
-[node name="health" type="ProgressBar" parent="."]
-margin_left = -16.0
-margin_top = -18.0
-margin_right = 18.0
-margin_bottom = -4.0
-
 [node name="name" type="Label" parent="."]
-margin_left = -18.0
-margin_top = -32.0
-margin_right = 22.0
-margin_bottom = -18.0
+margin_left = -11.0
+margin_top = -13.0
+margin_right = 13.0
+margin_bottom = -5.0
+theme = ExtResource( 4 )
+text = "Name"
+align = 1
+
+[node name="health" type="TextureProgress" parent="."]
+margin_left = -10.0
+margin_top = -6.0
+margin_right = 9.0
+margin_bottom = -4.0
+theme = ExtResource( 4 )
+value = 50.0
+texture_under = ExtResource( 6 )
+texture_progress = ExtResource( 5 )
+nine_patch_stretch = true
+stretch_margin_left = 1
+stretch_margin_top = 1
+stretch_margin_right = 1
+stretch_margin_bottom = 1
+
+[node name="StopTimer" type="Timer" parent="."]
+wait_time = 0.321
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/attack = ExtResource( 9 )
+anims/idle = ExtResource( 10 )
+anims/walk = ExtResource( 8 )
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource( 12 )
+
+[node name="State" type="Node" parent="StateMachine"]
+script = ExtResource( 11 )
 
 [connection signal="input_event" from="." to="." method="_on_Unit_input_event"]
+[connection signal="timeout" from="StopTimer" to="." method="_on_StopTimer_timeout"]
+[connection signal="timeout" from="StopTimer" to="StateMachine" method="_on_StopTimer_timeout"]

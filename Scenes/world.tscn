@@ -5,9 +5,10 @@
 [ext_resource path="res://Assets/building.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/CameraMovement.gd" type="Script" id=4]
 [ext_resource path="res://Assets/panel.png" type="Texture" id=5]
-[ext_resource path="res://Scenes/WorldManager.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/WorldManager.gd" type="Script" id=6]
 
 [node name="world" type="Node2D"]
+position = Vector2( 1, 0 )
 script = ExtResource( 6 )
 
 [node name="env" type="TileMap" parent="."]
@@ -19,20 +20,6 @@ tile_data = PoolIntArray( -720909, 1, 0, -720908, 1, 0, -720907, 1, 0, -720906, 
 __meta__ = {
 "_edit_lock_": true
 }
-
-[node name="Building" type="Sprite" parent="."]
-position = Vector2( 619, 278 )
-texture = ExtResource( 3 )
-offset = Vector2( -10, 3 )
-hframes = 2
-vframes = 2
-
-[node name="Building2" type="Sprite" parent="."]
-position = Vector2( 547, 325 )
-texture = ExtResource( 3 )
-offset = Vector2( -10, 3 )
-hframes = 2
-vframes = 2
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 513, 300 )
@@ -55,5 +42,52 @@ patch_margin_top = 3
 patch_margin_right = 3
 patch_margin_bottom = 3
 
-[node name="Unit" parent="." instance=ExtResource( 2 )]
-position = Vector2( 468, 200 )
+[node name="draw_rect" type="ColorRect" parent="UI/Base"]
+margin_left = -85.0
+margin_top = -3.0
+margin_right = -45.0
+margin_bottom = 37.0
+color = Color( 1, 1, 1, 0.262745 )
+
+[node name="YSort" type="YSort" parent="."]
+
+[node name="Unit2" parent="YSort" instance=ExtResource( 2 )]
+position = Vector2( 492, 298 )
+unit_owner = 1
+
+[node name="Unit4" parent="YSort" instance=ExtResource( 2 )]
+position = Vector2( 517, 261 )
+unit_owner = 2
+
+[node name="Unit5" parent="YSort" instance=ExtResource( 2 )]
+position = Vector2( 490, 268 )
+unit_owner = -1
+
+[node name="Unit3" parent="YSort" instance=ExtResource( 2 )]
+position = Vector2( 547, 253 )
+
+[node name="Unit6" parent="YSort" instance=ExtResource( 2 )]
+position = Vector2( 467, 275 )
+
+[node name="Unit7" parent="YSort" instance=ExtResource( 2 )]
+position = Vector2( 492, 238 )
+
+[node name="Unit8" parent="YSort" instance=ExtResource( 2 )]
+position = Vector2( 465, 245 )
+
+[node name="Unit" parent="YSort" instance=ExtResource( 2 )]
+position = Vector2( 572, 276 )
+
+[node name="Building" type="Sprite" parent="YSort"]
+position = Vector2( 619, 278 )
+texture = ExtResource( 3 )
+offset = Vector2( -10, 3 )
+hframes = 2
+vframes = 2
+
+[node name="Building2" type="Sprite" parent="YSort"]
+position = Vector2( 547, 325 )
+texture = ExtResource( 3 )
+offset = Vector2( -10, 3 )
+hframes = 2
+vframes = 2

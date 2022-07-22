@@ -1,7 +1,7 @@
 extends Camera2D
 
 export var speed = 20.0
-export var zoom_speed = 10.0
+export var zoom_speed = 15.0
 export var pan_speed = 10.0
 
 export var margin_x = 200.0
@@ -12,12 +12,23 @@ export var zoom_margin = 0.1
 export var zoom_min = 0.1
 export var zoom_max = 1.0
 export var zooming = false
+var is_dragging = false
 
 var mouse_pos = Vector2()
+var mouse_pos_global = Vector2()
+var start = Vector2()
+var startv = Vector2()
+var end = Vector2()
+var endv = Vector2()
+
 var zoom_pos = Vector2()
+onready var rectd = $"../UI/Base/draw_rect"
+signal area_selected
+signal right_clicked
 
 func _ready():
-	pass # Replace with function body.
+	connect("area_selected", get_parent(),"area_selected", [self])
+	connect("right_clicked", get_parent(),"right_clicked", [self])
 
 
 func _process(delta):
@@ -37,6 +48,25 @@ func _process(delta):
 		elif mouse_pos.y >  OS.window_size.y - margin_y:
 			position.y = lerp(position.y, position.y + abs((OS.window_size.y - margin_y) - mouse_pos.y )/margin_y * pan_speed *zoom.y, pan_speed * delta)
 
+	if Input.is_action_just_pressed("ui_left_mouse_button"):
+		start = mouse_pos_global
+		startv = mouse_pos
+		is_dragging = true
+	if is_dragging:
+		end = mouse_pos_global
+		endv = mouse_pos
+		draw_area()
+	if Input.is_action_just_released("ui_left_mouse_button"):
+		#if startv.distance_to(mouse_pos) > 20:#in case its a mistake, not sure if I'll keep
+		end = mouse_pos_global
+		endv = mouse_pos
+		is_dragging = false
+		draw_area(false)
+		emit_signal("area_selected")
+		#else:
+		#	end = start
+		#	is_dragging = false
+		#	draw_area(false)
 
 	zoom.x = lerp(zoom.x, zoom.x *zoom_factor, zoom_speed * delta)
 	zoom.y = lerp(zoom.y, zoom.y *zoom_factor, zoom_speed * delta)
@@ -61,3 +91,13 @@ func _input(event):
 			zooming = false
 	if event is InputEventMouse:
 		mouse_pos = event.position
+	
+	if event is InputEventMouseButton:
+		if event.button_index == BUTTON_RIGHT and event.pressed == true:
+			emit_signal("right_clicked")
+
+func draw_area(render = true):
+	rectd.rect_size.x = abs(startv.x-endv.x) * int(render)
+	rectd.rect_size.y = abs(startv.y-endv.y) * int(render)
+	rectd.rect_position.x = min(startv.x,endv.x)
+	rectd.rect_position.y = min(startv.y,endv.y)

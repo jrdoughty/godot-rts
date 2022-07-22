@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/devilspear.png-e67403fa9564c8e77be458b70138a54e.stex"
+path="res://.import/fill.png-64cef7ba599dc4112b08bfccab5fe612.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/devilspear.png"
-dest_files=[ "res://.import/devilspear.png-e67403fa9564c8e77be458b70138a54e.stex" ]
+source_file="res://Assets/fill.png"
+dest_files=[ "res://.import/fill.png-64cef7ba599dc4112b08bfccab5fe612.stex" ]
 
 [params]
 
@@ -31,5 +31,5 @@ process/invert_color=false
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0
