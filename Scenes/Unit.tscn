@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Assets/lizardclaw.png" type="Texture" id=1]
 [ext_resource path="res://Assets/box.png" type="Texture" id=2]
@@ -8,13 +8,26 @@
 [ext_resource path="res://Assets/bg.png" type="Texture" id=6]
 [ext_resource path="res://Assets/neutral_unit_material.tres" type="Material" id=7]
 [ext_resource path="res://Assets/walk.tres" type="Animation" id=8]
-[ext_resource path="res://Assets/attack.tres" type="Animation" id=9]
+[ext_resource path="res://Assets/death.tres" type="Animation" id=9]
 [ext_resource path="res://Assets/idle.tres" type="Animation" id=10]
-[ext_resource path="res://Scripts/State.gd" type="Script" id=11]
+[ext_resource path="res://Scenes/MoveState.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Scripts/StateMachine.gd" type="Script" id=12]
+[ext_resource path="res://Scenes/IdleState.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scenes/AttackState.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Scenes/EngagingState.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scenes/DyingState.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Scenes/MoveTransition.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Scenes/IdleTransition.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Scenes/EngagingTransition.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Scenes/Transition.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Scenes/AttackTransition.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Scripts/IdleState.gd" type="Script" id=22]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4, 4 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 55.0364
 
 [node name="Unit" type="KinematicBody2D"]
 material = ExtResource( 7 )
@@ -62,7 +75,8 @@ margin_top = -6.0
 margin_right = 9.0
 margin_bottom = -4.0
 theme = ExtResource( 4 )
-value = 50.0
+max_value = 20.0
+value = 20.0
 texture_under = ExtResource( 6 )
 texture_progress = ExtResource( 5 )
 nine_patch_stretch = true
@@ -77,15 +91,43 @@ one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/attack = ExtResource( 9 )
+anims/death = ExtResource( 9 )
 anims/idle = ExtResource( 10 )
 anims/walk = ExtResource( 8 )
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 12 )
 
-[node name="State" type="Node" parent="StateMachine"]
-script = ExtResource( 11 )
+[node name="IdleState" parent="StateMachine" instance=ExtResource( 13 )]
+script = ExtResource( 22 )
+
+[node name="Transition" parent="StateMachine/IdleState" instance=ExtResource( 18 )]
+
+[node name="AttackState" parent="StateMachine" instance=ExtResource( 14 )]
+
+[node name="Transition" parent="StateMachine/AttackState" instance=ExtResource( 21 )]
+
+[node name="EngagingState" parent="StateMachine" instance=ExtResource( 15 )]
+
+[node name="Transition" parent="StateMachine/EngagingState" instance=ExtResource( 19 )]
+
+[node name="DyingState" parent="StateMachine" instance=ExtResource( 16 )]
+
+[node name="Transition" parent="StateMachine/DyingState" instance=ExtResource( 20 )]
+
+[node name="MoveState" parent="StateMachine" instance=ExtResource( 11 )]
+
+[node name="Transition" parent="StateMachine/MoveState" instance=ExtResource( 17 )]
+
+[node name="Vision" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
+position = Vector2( 0, 4 )
+shape = SubResource( 2 )
 
 [connection signal="input_event" from="." to="." method="_on_Unit_input_event"]
 [connection signal="timeout" from="StopTimer" to="." method="_on_StopTimer_timeout"]
 [connection signal="timeout" from="StopTimer" to="StateMachine" method="_on_StopTimer_timeout"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="body_entered" from="Vision" to="." method="_on_Vision_body_entered"]
+[connection signal="body_exited" from="Vision" to="." method="_on_Vision_body_exited"]

@@ -1,0 +1,5 @@
+extends Node
+class_name Transition
+
+func get_transition(unit)->String:
+	return ""

@@ -57,16 +57,16 @@ func _process(delta):
 		endv = mouse_pos
 		draw_area()
 	if Input.is_action_just_released("ui_left_mouse_button"):
-		#if startv.distance_to(mouse_pos) > 20:#in case its a mistake, not sure if I'll keep
-		end = mouse_pos_global
-		endv = mouse_pos
-		is_dragging = false
-		draw_area(false)
-		emit_signal("area_selected")
-		#else:
-		#	end = start
-		#	is_dragging = false
-		#	draw_area(false)
+		if startv.distance_to(mouse_pos) > 16:#in case its a mistake, not sure if I'll keep
+			end = mouse_pos_global
+			endv = mouse_pos
+			is_dragging = false
+			draw_area(false)
+			emit_signal("area_selected")
+		else:
+			end = start
+			is_dragging = false
+			draw_area(false)
 
 	zoom.x = lerp(zoom.x, zoom.x *zoom_factor, zoom_speed * delta)
 	zoom.y = lerp(zoom.y, zoom.y *zoom_factor, zoom_speed * delta)

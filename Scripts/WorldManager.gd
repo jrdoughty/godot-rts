@@ -13,21 +13,22 @@ func _ready():
 	pass
 
 func select_unit(unit):
-	if not selected_units.has(unit):
+	if is_instance_valid(unit) and not selected_units.has(unit):
 		selected_units.append(unit)
 	print("selected %s" % unit.name)
 	create_buttons()
 	
 func deselect_unit(unit):
-	if selected_units.has(unit):
-		selected_units.erase(unit)
-	print("deselected %s" % unit.name)
+	if is_instance_valid(unit):
+		if selected_units.has(unit) or not is_instance_valid(unit):
+			selected_units.erase(unit)
+		print("deselected %s" % unit.name)
 	create_buttons()
 	
 func create_buttons():
 	delete_buttons()
 	for unit in selected_units:
-		if not buttons.has(unit.name):
+		if is_instance_valid(unit) and not buttons.has(unit.name):
 			var but = button.instance()
 			but.connect_me(self, unit.name)
 			but.rect_position = Vector2(buttons.size() * 60 +32,540)
@@ -43,11 +44,12 @@ func delete_buttons():
 	buttons.clear()
 func was_pressed(obj):
 	for unit in selected_units:
-		if unit.name == obj.name:
+		if is_instance_valid(unit) and unit.name == obj.name:
 			unit.set_selected(false)
 func right_clicked(obj):
 	for unit in selected_units:
-		unit.target_pos = obj.mouse_pos
+		if is_instance_valid(unit):
+			unit.target_pos = obj.mouse_pos
 	
 func area_selected(obj):
 	var start = obj.startv
@@ -63,7 +65,7 @@ func area_selected(obj):
 func get_units_in_area(area):
 	var u = []
 	for unit in units:
-		if unit.position.x > area[0].x and unit.position.y > area[0].y and unit.position.x < area[1].x and unit.position.y < area[1].y  and unit.unit_owner == 0:
+		if is_instance_valid(unit) and unit.position.x > area[0].x and unit.position.y > area[0].y and unit.position.x < area[1].x and unit.position.y < area[1].y  and unit.unit_owner == 0:
 			u.append(unit)			
 	return u
 func deselect_all():
