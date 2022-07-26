@@ -49,13 +49,14 @@ func was_pressed(obj):
 func right_clicked(obj):
 	for unit in selected_units:
 		if is_instance_valid(unit):
-			unit.target_pos = obj.mouse_pos
+			unit.target_pos = obj.mouse_pos_global
 	
 func area_selected(obj):
-	var start = obj.startv
-	var end = obj.endv
-	var area = [Vector2(min(start.x, end.x),min(start.y, end.y)),
-	Vector2(max(start.x, end.x),max(start.y, end.y))]
+	var start = obj.start
+	var end = obj.end
+	var area = []
+	area.append(Vector2(min(start.x, end.x), min(start.y, end.y)))
+	area.append(Vector2(max(start.x, end.x), max(start.y, end.y)))
 	var ut = get_units_in_area(area)
 	if not Input.is_key_pressed(KEY_SHIFT):
 		deselect_all()

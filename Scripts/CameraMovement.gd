@@ -91,7 +91,7 @@ func _input(event):
 			zooming = false
 	if event is InputEventMouse:
 		mouse_pos = event.position
-	
+		mouse_pos_global = get_global_mouse_position()
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_RIGHT and event.pressed == true:
 			emit_signal("right_clicked")
