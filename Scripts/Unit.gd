@@ -81,7 +81,7 @@ func move_to_target(delta, tar):
 		velocity = move_and_slide(velocity)		
 		
 
-func attack_enemy(tar):
+func attack_enemy(tar:Unit):
 	if position.distance_to(tar.position) <= attack_range:
 		anim_player.play("attack")
 		tar.take_damage(damage)
@@ -133,6 +133,14 @@ func closest_enemy()->Unit:
 	if possible_targets == []:
 		return null
 	possible_targets.sort_custom(self,"_compare_distance")
+	return possible_targets[0]
+	
+func closest_enemy_in_range()->Unit:
+	if possible_targets == []:
+		return null
+	possible_targets.sort_custom(self,"_compare_distance")
+	if(position.distance_to(possible_targets[0].position) > attack_range):
+		return null
 	return possible_targets[0]
 		
 func _compare_distance(target_a, target_b):

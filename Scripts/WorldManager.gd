@@ -14,14 +14,11 @@ func _ready():
 func select_unit(unit):
 	if is_instance_valid(unit) and not selected_units.has(unit):
 		selected_units.append(unit)
-	print("selected %s" % unit.name)
 	create_buttons()
 
 func deselect_unit(unit):
-	if is_instance_valid(unit):
-		if selected_units.has(unit) or not is_instance_valid(unit):
-			selected_units.erase(unit)
-		print("deselected %s" % unit.name)
+	if selected_units.has(unit):
+		selected_units.erase(unit)
 	create_buttons()
 
 func create_buttons():
@@ -48,6 +45,18 @@ func was_pressed(obj):
 			unit.set_selected(false)
 
 func right_clicked(obj):
+	for unit in selected_units:
+		if is_instance_valid(unit):
+			unit.target_pos = obj.mouse_pos_global
+func attack_pressed(obj):
+	for unit in selected_units:
+		if is_instance_valid(unit):
+			unit.target_pos = obj.mouse_pos_global
+func stop_pressed(obj):
+	for unit in selected_units:
+		if is_instance_valid(unit):
+			unit.target_pos = obj.mouse_pos_global
+func hold_pressed(obj):
 	for unit in selected_units:
 		if is_instance_valid(unit):
 			unit.target_pos = obj.mouse_pos_global
