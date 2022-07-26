@@ -10,21 +10,20 @@ var units = []
 func _ready():
 	var tree = get_tree()
 	units = tree.get_nodes_in_group("units")
-	pass
 
 func select_unit(unit):
 	if is_instance_valid(unit) and not selected_units.has(unit):
 		selected_units.append(unit)
 	print("selected %s" % unit.name)
 	create_buttons()
-	
+
 func deselect_unit(unit):
 	if is_instance_valid(unit):
 		if selected_units.has(unit) or not is_instance_valid(unit):
 			selected_units.erase(unit)
 		print("deselected %s" % unit.name)
 	create_buttons()
-	
+
 func create_buttons():
 	delete_buttons()
 	for unit in selected_units:
@@ -42,15 +41,17 @@ func delete_buttons():
 				b.queue_free()
 				$"UI/Base".remove_child(b)
 	buttons.clear()
+
 func was_pressed(obj):
 	for unit in selected_units:
 		if is_instance_valid(unit) and unit.name == obj.name:
 			unit.set_selected(false)
+
 func right_clicked(obj):
 	for unit in selected_units:
 		if is_instance_valid(unit):
 			unit.target_pos = obj.mouse_pos_global
-	
+
 func area_selected(obj):
 	var start = obj.start
 	var end = obj.end
@@ -62,13 +63,14 @@ func area_selected(obj):
 		deselect_all()
 	for u in ut:
 		u.set_selected(true)
-		
+
 func get_units_in_area(area):
 	var u = []
 	for unit in units:
 		if is_instance_valid(unit) and unit.position.x > area[0].x and unit.position.y > area[0].y and unit.position.x < area[1].x and unit.position.y < area[1].y  and unit.unit_owner == 0:
 			u.append(unit)			
 	return u
+
 func deselect_all():
 	while selected_units.size() > 0:
 		selected_units[0].set_selected(false)
