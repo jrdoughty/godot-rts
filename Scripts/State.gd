@@ -5,19 +5,6 @@ var unit
 var inProg:= false #is a wait in progress from before
 onready var transition = $Transition
 
-var command = Commands.NONE
-var command_mod = CommandsMods.NONE
-
-enum Commands {
-	NONE,
-	MOVE,
-	ATTACK_MOVE,
-	HOLD
-}
-enum CommandsMods {
-	NONE,
-	ATTACK_MOVE
-}
 
 func set_selected(value):
 	pass

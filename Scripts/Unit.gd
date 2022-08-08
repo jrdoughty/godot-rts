@@ -15,6 +15,9 @@ onready var collider = $CollisionShape2D
 onready var state_machine = $StateMachine
 onready var vision = $Vision
 onready var vision_collider = $Vision/CollisionShape2D
+onready var nav2d = get_node("/root/world/Navigation2D")
+onready var rays = $Rays
+onready var ray_front = $Rays/RayFront
 
 export var target_pos := Vector2.ZERO
 var attack_target = null
@@ -22,11 +25,12 @@ export var unit_owner := 0 #team number
 
 var last_position := Vector2.ZERO
 var velocity := Vector2.ZERO
-var target_max := 3
+var target_max := 7
 var attack_range := 16
 var speed := 60
 var move_threshold := 2
-
+var leg_reset_threshold = 6
+var nav_path : PoolVector2Array
 signal was_selected
 signal was_deselected
 
@@ -36,8 +40,11 @@ var neutral_material := load("res://Assets/neutral_unit_material.tres")
 var ally_material := load("res://Assets/ally_unit_material.tres")
 
 var possible_targets = []
+var aggressive = false
 export var health = 20
 export var damage = 3
+var enums:Enumerations
+var active_command
 
 
 func set_selected(value):
@@ -46,6 +53,8 @@ func set_selected(value):
 		box.visible = value
 		health_bar.visible = value
 		name_label.visible = value
+		enums = get_node("/root/Enums")
+		active_command = enums.Commands.NONE
 		if selected:
 			emit_signal("was_selected", self)
 		else:
@@ -70,7 +79,73 @@ func _ready():
 		material = enemy_material
 	elif unit_owner == 2:
 		material = player_material
-
+#commands
+func move_cmd(pos: Vector2, aggr:bool = false):
+	set_target(pos)
+	aggressive = aggr
+	state_machine.change_state_via_name("MoveState")
+func attack_cmd(tar: Unit):
+	attack_target = tar
+	state_machine.change_state_via_name("AttackState")
+func stop_cmd():
+	target_pos = position
+	attack_target = null
+	state_machine.change_state_via_name("IdleState")
+	
+	
+func set_target(target):
+	nav_path = nav2d.get_simple_path(position, target)
+	target_pos = target
+	
+func move_with_avoidance(tar):
+	rays.rotation = velocity.angle()
+	if _obstacle_ahead():
+		var viable_ray = _get_viable_ray()
+		if viable_ray:
+			velocity = Vector2.RIGHT.rotated(viable_ray + rays.rotation) * speed
+	
+	move_and_slide(velocity)
+	
+func _obstacle_ahead()->bool:
+	return true#ray_front.is_colliding()
+func _get_viable_ray()->int:
+	var viable = []
+	var danger = []
+	for r in rays.get_children():
+		if r.is_colliding():
+			danger.append(r)
+		else:
+			viable.append(r)
+	var rot := 0
+	var dang := 0
+	for r in danger:
+		dang += r.rotation_degrees
+	var numV = 0
+	for r in viable:
+		if dang < 0 and r.rotation_degrees > 0:
+			rot += r.rotation_degrees
+			numV += 1
+		elif dang > 0 and r.rotation_degrees < 0:
+			rot += r.rotation_degrees
+			numV += 1
+	if numV > 1:
+		rot /= numV-1
+	print(rot)
+	return rot
+func move_along_path(delta):
+	if nav_path.size() > 0:
+		var dist_to_next = position.distance_to(nav_path[0])
+		if dist_to_next < leg_reset_threshold:
+			nav_path.remove(0)
+			if nav_path.size() != 0:
+				velocity = position.direction_to(nav_path[0]) * speed
+				#move_and_slide(velocity)
+				move_with_avoidance(nav_path[0])
+		else:
+			velocity = position.direction_to(nav_path[0]) * speed
+			#move_and_slide(velocity)
+			move_with_avoidance(nav_path[0])
+				
 func move_to_target(delta, tar):
 	velocity = Vector2.ZERO
 	if position.distance_to(tar) > target_max:

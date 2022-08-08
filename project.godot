@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Node",
+"class": "Enumerations",
+"language": "GDScript",
+"path": "res://Scripts/Enums.gd"
+}, {
+"base": "Node",
 "class": "State",
 "language": "GDScript",
 "path": "res://Scripts/State.gd"
@@ -30,6 +35,7 @@ _global_script_classes=[ {
 "path": "res://Scripts/Unit.gd"
 } ]
 _global_script_class_icons={
+"Enumerations": "",
 "State": "",
 "StateMachine": "",
 "Transition": "",
@@ -41,6 +47,10 @@ _global_script_class_icons={
 config/name="Rts"
 run/main_scene="res://Scenes/world.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Enums="*res://Scripts/Enums.gd"
 
 [importer_defaults]
 

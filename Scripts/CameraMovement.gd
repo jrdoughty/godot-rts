@@ -23,12 +23,19 @@ var endv = Vector2()
 
 var zoom_pos = Vector2()
 onready var rectd = $"../UI/Base/draw_rect"
+onready var arrow = $"../Arrow"
 signal area_selected
 signal right_clicked
+signal attack_pressed
+signal stop_pressed
+signal hold_pressed
 
 func _ready():
 	connect("area_selected", get_parent(),"area_selected", [self])
 	connect("right_clicked", get_parent(),"right_clicked", [self])
+	connect("attack_pressed", get_parent(),"attack_pressed", [self])
+	connect("stop_pressed", get_parent(),"stop_pressed", [self])
+	connect("hold_pressed", get_parent(),"hold_pressed", [self])
 
 
 func _process(delta):
@@ -48,6 +55,12 @@ func _process(delta):
 		elif mouse_pos.y >  OS.window_size.y - margin_y:
 			position.y = lerp(position.y, position.y + abs((OS.window_size.y - margin_y) - mouse_pos.y )/margin_y * pan_speed *zoom.y, pan_speed * delta)
 
+	if Input.is_action_just_pressed("attack_move"):
+			emit_signal("attack_pressed")	
+	if Input.is_action_just_pressed("stop"):
+			emit_signal("stop_pressed")	
+	if Input.is_action_just_pressed("hold"):
+			emit_signal("hold_pressed")		
 	if Input.is_action_just_pressed("ui_left_mouse_button"):
 		start = mouse_pos_global
 		startv = mouse_pos
@@ -95,6 +108,10 @@ func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_RIGHT and event.pressed == true:
 			emit_signal("right_clicked")
+			arrow.position = mouse_pos_global
+			arrow.frame = 0
+			arrow.play("default")
+			
 
 func draw_area(render = true):
 	rectd.rect_size.x = abs(startv.x-endv.x) * int(render)

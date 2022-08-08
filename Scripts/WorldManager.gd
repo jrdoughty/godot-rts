@@ -7,9 +7,12 @@ var selected_units = []
 var buttons = []
 var units = []
 
+var enums:Enumerations
+
 func _ready():
 	var tree = get_tree()
 	units = tree.get_nodes_in_group("units")
+	enums = get_node("/root/Enums")
 
 func select_unit(unit):
 	if is_instance_valid(unit) and not selected_units.has(unit):
@@ -32,9 +35,9 @@ func create_buttons():
 			buttons.append(but.name)
 
 func delete_buttons():
-	for button in buttons:
-			if $"UI/Base".has_node(button):
-				var b = $"UI/Base".get_node(button)
+	for btn in buttons:
+			if $"UI/Base".has_node(btn):
+				var b = $"UI/Base".get_node(btn)
 				b.queue_free()
 				$"UI/Base".remove_child(b)
 	buttons.clear()
@@ -46,20 +49,24 @@ func was_pressed(obj):
 
 func right_clicked(obj):
 	for unit in selected_units:
-		if is_instance_valid(unit):
-			unit.target_pos = obj.mouse_pos_global
+		if enums.command_mod == enums.CommandsMods.NONE:
+			unit.move_cmd(obj.mouse_pos_global, false)
+		elif enums.command_mod == enums.CommandsMods.ATTACK_MOVE:
+			unit.move_cmd(obj.mouse_pos_global, true)
+		clear_commands()
+func clear_commands():
+	enums.command_mod = enums.CommandsMods.NONE
+	#enums.command = enums.Commands.NONE
 func attack_pressed(obj):
-	for unit in selected_units:
-		if is_instance_valid(unit):
-			unit.target_pos = obj.mouse_pos_global
+	enums.command_mod = enums.CommandsMods.ATTACK_MOVE
 func stop_pressed(obj):
+	#enums.command = enums.Commands.HOLD#stop will come later
 	for unit in selected_units:
-		if is_instance_valid(unit):
-			unit.target_pos = obj.mouse_pos_global
+		unit.stop_cmd()
 func hold_pressed(obj):
+	#enums.command = enums.Commands.HOLD
 	for unit in selected_units:
-		if is_instance_valid(unit):
-			unit.target_pos = obj.mouse_pos_global
+		unit.stop_cmd()
 
 func area_selected(obj):
 	var start = obj.start

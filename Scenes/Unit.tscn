@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Assets/lizardclaw.png" type="Texture" id=1]
 [ext_resource path="res://Assets/box.png" type="Texture" id=2]
@@ -21,10 +21,9 @@
 [ext_resource path="res://Scenes/EngagingTransition.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Scenes/Transition.tscn" type="PackedScene" id=20]
 [ext_resource path="res://Scenes/AttackTransition.tscn" type="PackedScene" id=21]
-[ext_resource path="res://Scripts/IdleState.gd" type="Script" id=22]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4, 4 )
+extents = Vector2( 4, 2 )
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 55.0364
@@ -46,6 +45,7 @@ hframes = 2
 vframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 2 )
 shape = SubResource( 1 )
 
 [node name="box" type="NinePatchRect" parent="."]
@@ -99,7 +99,6 @@ anims/walk = ExtResource( 8 )
 script = ExtResource( 12 )
 
 [node name="IdleState" parent="StateMachine" instance=ExtResource( 13 )]
-script = ExtResource( 22 )
 
 [node name="Transition" parent="StateMachine/IdleState" instance=ExtResource( 18 )]
 
@@ -120,10 +119,43 @@ script = ExtResource( 22 )
 [node name="Transition" parent="StateMachine/MoveState" instance=ExtResource( 17 )]
 
 [node name="Vision" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
 position = Vector2( 0, 4 )
 shape = SubResource( 2 )
+
+[node name="Rays" type="Node2D" parent="."]
+position = Vector2( 0, 2 )
+
+[node name="RayFront" type="RayCast2D" parent="Rays"]
+enabled = true
+cast_to = Vector2( 8, 0 )
+collision_mask = 2
+
+[node name="RayRight" type="RayCast2D" parent="Rays"]
+rotation = 0.523599
+enabled = true
+cast_to = Vector2( 8, 0 )
+collision_mask = 2
+
+[node name="RayLeft" type="RayCast2D" parent="Rays"]
+rotation = -0.523599
+enabled = true
+cast_to = Vector2( 8, 0 )
+collision_mask = 2
+
+[node name="RayRight3" type="RayCast2D" parent="Rays"]
+rotation = 1.0472
+enabled = true
+cast_to = Vector2( 8, 0 )
+collision_mask = 2
+
+[node name="RayLeft3" type="RayCast2D" parent="Rays"]
+rotation = -1.0472
+enabled = true
+cast_to = Vector2( 8, 0 )
+collision_mask = 2
 
 [connection signal="input_event" from="." to="." method="_on_Unit_input_event"]
 [connection signal="timeout" from="StopTimer" to="." method="_on_StopTimer_timeout"]

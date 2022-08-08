@@ -11,7 +11,7 @@ func _update_sprite():
 
 func state_logic(delta):
 	if unit.position.distance_to(unit.target_pos) > unit.target_max:
-		unit.move_to_target(delta, unit.target_pos)
+		unit.move_along_path(delta)
 		_update_sprite()
 	else:		
 		get_parent().change_state_via_name("IdleState")
