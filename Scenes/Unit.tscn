@@ -157,6 +157,11 @@ enabled = true
 cast_to = Vector2( 8, 0 )
 collision_mask = 2
 
+[node name="Line2D" type="Line2D" parent="."]
+points = PoolVector2Array( 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+width = 2.0
+default_color = Color( 1, 0.4, 0.454902, 1 )
+
 [connection signal="input_event" from="." to="." method="_on_Unit_input_event"]
 [connection signal="timeout" from="StopTimer" to="." method="_on_StopTimer_timeout"]
 [connection signal="timeout" from="StopTimer" to="StateMachine" method="_on_StopTimer_timeout"]
