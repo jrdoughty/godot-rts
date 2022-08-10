@@ -18,6 +18,7 @@ onready var vision_collider = $Vision/CollisionShape2D
 onready var nav2d = get_node("/root/world/Navigation2D")
 onready var rays = $Rays
 onready var ray_front = $Rays/RayFront
+onready var line = $Line2D
 
 export var target_pos := Vector2.ZERO
 var attack_target = null
@@ -94,7 +95,18 @@ func stop_cmd():
 	
 	
 func set_target(target):
-	nav_path = nav2d.get_simple_path(position, target)
+	print(target)
+	nav_path = Navigation2DServer.map_get_path(nav2d,position,target,true)#nav2d.get_simple_path(position, target)
+	if nav_path.size() > 0:
+		print(nav_path[nav_path.size()-1])
+	#for i in nav_path:
+	#	var n = Vector2(i.x-position.x,i.y-position.y)
+	#	line.points.append(n)
+	#	print(n)
+	#for i in nav_path.size():
+	#	line.points[i] = nav_path[i] - position
+	#for i in line.points:
+	#	print (i)
 	target_pos = target
 	
 func move_with_avoidance(tar):
@@ -134,17 +146,23 @@ func _get_viable_ray()->int:
 	return rot
 func move_along_path(delta):
 	if nav_path.size() > 0:
+		#print(position.x)
+		#print(position.y)
+		#print(nav_path[0].x)
+		#	print(nav_path[0].y)
 		var dist_to_next = position.distance_to(nav_path[0])
+		#sqrt(abs(position.x-nav_path[0].x)*abs(position.x-nav_path[0].x)+abs(position.y-nav_path[0].y)*abs(position.y-nav_path[0].y))
+		
 		if dist_to_next < leg_reset_threshold:
 			nav_path.remove(0)
 			if nav_path.size() != 0:
 				velocity = position.direction_to(nav_path[0]) * speed
-				#move_and_slide(velocity)
-				move_with_avoidance(nav_path[0])
+				move_and_slide(velocity)
+				#move_with_avoidance(nav_path[0])
 		else:
 			velocity = position.direction_to(nav_path[0]) * speed
-			#move_and_slide(velocity)
-			move_with_avoidance(nav_path[0])
+			move_and_slide(velocity)
+			#move_with_avoidance(nav_path[0])
 				
 func move_to_target(delta, tar):
 	velocity = Vector2.ZERO
