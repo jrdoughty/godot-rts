@@ -13,6 +13,7 @@ func _ready():
 	var tree = get_tree()
 	units = tree.get_nodes_in_group("units")
 	enums = get_node("/root/Enums")
+	
 
 func select_unit(unit):
 	if is_instance_valid(unit) and not selected_units.has(unit):
@@ -54,6 +55,7 @@ func right_clicked(obj):
 		elif enums.command_mod == enums.CommandsMods.ATTACK_MOVE:
 			unit.move_cmd(obj.mouse_pos_global, true)
 		clear_commands()
+	print(Navigation2DServer.get_maps())
 func clear_commands():
 	enums.command_mod = enums.CommandsMods.NONE
 	#enums.command = enums.Commands.NONE
@@ -90,3 +92,5 @@ func get_units_in_area(area):
 func deselect_all():
 	while selected_units.size() > 0:
 		selected_units[0].set_selected(false)
+
+
